@@ -1,0 +1,27 @@
+# road_accident_prediction.py
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+# 1. Load dataset (replace with your own CSV file)
+data = pd.read_csv('road_accidents.csv')
+
+# 2. Data preprocessing
+# Example features: 'Time', 'Weather', 'Speed_Zone', 'Road_Geometry', 'Light_Condition', 'Severity'
+categorical_features = ['Weather', 'Road_Geometry', 'Light_Condition']
+label_encoders = {}
+
+for col in categorical_features:
+    le = LabelEncoder()
+    data[col] = le.fit_transform(data[col].astype(str))
+    label_encoders[col] = le
+
+# Encode target variable (Severity)
+target_le = LabelEncoder()
+data['Severity'] = target_le.fit_transform(data['Severity'])
+
+# 3. Feature selection
+features = ['Time', 'Weather', '
